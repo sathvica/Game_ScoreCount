@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Names and Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+            width: 80%;
+            max-width: 900px;
+            background: #ffffff;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .names, .calculator {
+            padding: 20px;
+        }
+
+        .names h3, .calculator h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .names ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .names ul li {
+            margin: 5px 0;
+            padding: 8px;
+            background: #f4f4f4;
+            border-radius: 5px;
+            color: #555;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .names form {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .names form input {
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .names form button {
+            padding: 10px;
+            font-size: 16px;
+            color: white;
+            background: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .names form button:hover {
+            background: #0056b3;
+        }
+
+        .calculator .result {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Side: Names -->
+        <div class="names">
+            <h3>Names</h3>
+            <ul>
+                {% for name in names %}
+                <li>
+                    <strong>{{ name }}</strong>
+                    <form method="POST" style="margin: 0;">
+                        <input type="hidden" name="current_name" value="{{ name }}">
+                        <input type="text" name="num1" placeholder="Enter first number" required>
+                        <input type="text" name="num2" placeholder="Enter second number" required>
+                        <button type="submit" name="add_numbers">Add Numbers</button>
+                    </form>
+                    {% if name in results and results[name] is not none %}
+                    <div class="result">
+                        <strong>Result:</strong> {{ results[name] }}
+                    </div>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+            <form method="POST">
+                <input type="text" name="name" placeholder="Enter a new name" required>
+                <button type="submit" name="add_name">Add Name</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
